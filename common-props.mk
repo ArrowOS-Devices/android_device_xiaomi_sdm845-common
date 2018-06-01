@@ -188,4 +188,5 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.use_color_management=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.sf.enable_gl_backpressure=1
+    debug.sf.enable_gl_backpressure=1 \
+    debug.sf.early_phase_offset_ns=5000000
