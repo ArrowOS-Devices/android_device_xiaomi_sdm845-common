@@ -4,6 +4,10 @@
     "target_path": "kernel/xiaomi/sdm845"
   },
   {
+    "repository": "android_vendor_xiaomi_sdm845-common",
+    "target_path": "vendor/xiaomi"
+  },
+  {
     "repository": "android_packages_resources_devicesettings",
     "target_path": "packages/resources/devicesettings"
   }
