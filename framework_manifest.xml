@@ -7,6 +7,5 @@
             <name>IKeystoreExt</name>
             <instance>default</instance>
         </interface>
-        <fqname>@1.0::IKeystoreExt/default</fqname>
     </hal>
 </manifest>
