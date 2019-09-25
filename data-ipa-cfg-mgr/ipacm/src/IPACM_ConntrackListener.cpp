@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -230,7 +230,7 @@ void IPACM_ConntrackListener::HandleNonNatIPAddr(
 	bool NatIface = false;
 	int cnt, ret;
 
-	if (isStaMode)
+	if (backhaul_mode != Q6_WAN)
 	{
 		IPACMDBG("In STA mode, don't add dummy rules for non nat ifaces\n");
 		return;
@@ -244,16 +244,6 @@ void IPACM_ConntrackListener::HandleNonNatIPAddr(
 		ret = CheckNatIface(data, &NatIface);
 		if (!NatIface && ret == IPACM_SUCCESS)
 		{
-			/* Search the non nat iface ip address */
-			for (cnt = 0; cnt < MAX_IFACE_ADDRESS; cnt++)
-			{
-				if (data->ipv4_addr == nonnat_iface_ipv4_addr[cnt])
-				{
-					IPACMDBG("Already in nonna_iface_ipv4_addr_list (%d) ", cnt);
-					iptodot("with ipv4 address", nonnat_iface_ipv4_addr[cnt]);
-					return;
-				}
-			}
 			/* Cache the non nat iface ip address */
 			for (cnt = 0; cnt < MAX_IFACE_ADDRESS; cnt++)
 			{
@@ -378,8 +368,8 @@ void IPACM_ConntrackListener::TriggerWANUp(void *in_param)
 	 }
 
 	 WanUp = true;
-	 isStaMode = wanup_data->is_sta;
-	 IPACMDBG("isStaMode: %d\n", isStaMode);
+	 backhaul_mode = wanup_data->backhaul_type;
+	 IPACMDBG("backhaul_mode: %d\n", backhaul_mode);
 
 	 wan_ipaddr = wanup_data->ipv4_addr;
 	 memcpy(wan_ifname, wanup_data->ifname, sizeof(wan_ifname));
@@ -740,7 +730,7 @@ bool IPACM_ConntrackListener::AddIface(
 		}
 	}
 
-	if (!isStaMode)
+	if (backhaul_mode == Q6_WAN)
 	{
 		/* check whether non nat iface or not, on Non Nat iface
 		   add dummy rule by copying public ip to private ip */
@@ -1009,7 +999,7 @@ void IPACM_ConntrackListener::CheckSTAClient(
 
 	/* Check whether target is in STA client list or not
       if not ignore the connection */
-	 if(!isStaMode || (StaClntCnt == 0))
+	 if((backhaul_mode == Q6_WAN) || (StaClntCnt == 0))
 	 {
 		return;
 	 }
@@ -1124,7 +1114,7 @@ void IPACM_ConntrackListener::ProcessTCPorUDPMsg(
 	}
 	else
 	{
-		if (isStaMode)
+		if (backhaul_mode != Q6_WAN)
 		{
 			IPACMDBG("In STA mode, ignore connections destinated to STA interface\n");
 			goto IGNORE;
