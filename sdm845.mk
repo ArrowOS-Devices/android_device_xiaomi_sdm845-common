@@ -328,10 +328,6 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-vendorcompat \
     libprotobuf-cpp-lite-vendorcompat
 
-# VNDK-SP
-PRODUCT_PACKAGES += \
-    vndk-sp
-
 # VR
 PRODUCT_PACKAGES += \
     android.hardware.vr@1.0-impl \
