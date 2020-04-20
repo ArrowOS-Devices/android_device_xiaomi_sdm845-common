@@ -1,3 +1,6 @@
+# Charger
+ro.charger.enable_suspend=true
+
 # LMKD
 ro.lmk.low=1001
 ro.lmk.medium=800
