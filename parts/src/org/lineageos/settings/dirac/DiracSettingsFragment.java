@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018,2020 The LineageOS Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,14 +51,19 @@ public class DiracSettingsFragment extends PreferenceFragment implements
     private ListPreference mHeadsetType;
     private ListPreference mPreset;
 
+    private DiracUtils mDiracUtils;
+    private Handler mHandler = new Handler();
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.dirac_settings);
+
+        mDiracUtils = new DiracUtils(getContext());
+
         final ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        DiracUtils.initialize();
-        boolean enhancerEnabled = DiracUtils.isDiracEnabled(getActivity());
+        boolean enhancerEnabled = mDiracUtils.isDiracEnabled();
 
         mHeadsetType = (ListPreference) findPreference(PREF_HEADSET);
         mHeadsetType.setOnPreferenceChangeListener(this);
@@ -81,7 +87,7 @@ public class DiracSettingsFragment extends PreferenceFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        boolean enhancerEnabled = DiracUtils.isDiracEnabled(getActivity());
+        boolean enhancerEnabled = mDiracUtils.isDiracEnabled();
 
         mTextView = view.findViewById(R.id.switch_text);
         mTextView.setText(getString(enhancerEnabled ?
@@ -102,10 +108,10 @@ public class DiracSettingsFragment extends PreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         switch (preference.getKey()) {
             case PREF_HEADSET:
-                DiracUtils.setHeadsetType(Integer.parseInt(newValue.toString()));
+                mDiracUtils.setHeadsetType(Integer.parseInt(newValue.toString()));
                 return true;
             case PREF_PRESET:
-                DiracUtils.setLevel(String.valueOf(newValue));
+                mDiracUtils.setLevel(String.valueOf(newValue));
                 return true;
             default: return false;
         }
@@ -113,13 +119,29 @@ public class DiracSettingsFragment extends PreferenceFragment implements
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        DiracUtils.setMusic(isChecked);
-
+        mDiracUtils.setEnabled(isChecked);
         mTextView.setText(getString(isChecked ? R.string.switch_bar_on : R.string.switch_bar_off));
-        mSwitchBar.setActivated(isChecked);
+        if (isChecked) {
+            mSwitchBar.setEnabled(false);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mSwitchBar.setEnabled(true);
+                        setEnabled(isChecked);
+                    } catch(Exception ignored) {
+                    }
+                }
+            }, 1020);
+        } else {
+            setEnabled(isChecked);
+        }
+    }
 
-        mHeadsetType.setEnabled(isChecked);
-        mPreset.setEnabled(isChecked);
+    private void setEnabled(boolean enabled){
+        mSwitchBar.setActivated(enabled);
+        mHeadsetType.setEnabled(enabled);
+        mPreset.setEnabled(enabled);
     }
 
     @Override
