@@ -108,6 +108,11 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.bluetooth_audio@2.0.vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor
 
+# Binder
+PRODUCT_PACKAGES += \
+    libhwbinder \
+    libhwbinder.vendor
+
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
@@ -175,7 +180,9 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
     android.hidl.manager@1.0 \
-    android.hidl.manager@1.0_system
+    android.hidl.manager@1.0_system \
+    libhidltransport \
+    libhidltransport.vendor
 
 # HotwordEnrollement app permissions
 PRODUCT_COPY_FILES += \
