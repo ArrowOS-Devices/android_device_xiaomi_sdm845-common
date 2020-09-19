@@ -253,7 +253,6 @@ product/framework/dpmapi.jar
 product/lib64/com.qualcomm.qti.dpm.api@1.0.so
 product/lib64/libdpmctmgr.so
 product/lib64/libdpmfdmgr.so
-product/lib64/libdpmframework.so
 product/lib64/libdpmtcm.so
 product/lib/com.qualcomm.qti.dpm.api@1.0.so
 product/lib/libdpmctmgr.so
@@ -262,6 +261,7 @@ product/lib/libdpmframework.so
 product/lib/libdpmtcm.so
 -product/priv-app/dpmserviceapp/dpmserviceapp.apk
 system/framework/tcmclient.jar
+system_ext/lib64/libdpmframework.so|51a625e7f2ea91bf6228ce3cad572ba26d760cb3
 vendor/bin/dpmQmiMgr
 vendor/etc/init/dpmQmiMgr.rc
 vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so
