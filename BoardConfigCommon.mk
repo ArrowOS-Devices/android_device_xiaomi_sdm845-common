@@ -144,7 +144,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD := true
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2020-05-01
+VENDOR_SECURITY_PATCH := 2020-07-01
 
 # SELinux
 include device/qcom/sepolicy_vndr/SEPolicy.mk
