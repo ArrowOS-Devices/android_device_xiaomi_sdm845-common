@@ -12,6 +12,9 @@ sdm.debug.disable_inline_rotator_secure=1
 ro.config.low_ram=false
 ro.lmk.log_stats=true
 
+# Shutdown
+ro.build.shutdown_timeout=2
+
 # SurfaceFlinger
 debug.sf.disable_backpressure=1
 debug.sf.early_app_phase_offset_ns=500000
