@@ -6,6 +6,7 @@ allow radio { cameraserver_service mediaextractor_service mediaserver_service me
 get_prop(radio, qcom_ims_prop)
 binder_call(radio, cnd)
 binder_call(radio, hal_imsrtp)
+binder_call(radio, gpuservice)
 
 allow radio self:socket create_socket_perms;
 
