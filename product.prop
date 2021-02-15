@@ -1,9 +1,6 @@
 # Charger
 ro.charger.enable_suspend=true
 
-# Graphics
-debug.hwui.renderer=skiavk
-
 # LMKD
 ro.lmk.low=1001
 ro.lmk.medium=800
