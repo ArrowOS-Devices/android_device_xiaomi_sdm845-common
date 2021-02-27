@@ -1,1 +1,0 @@
-allow hvdcp system_prop:file r_file_perms;

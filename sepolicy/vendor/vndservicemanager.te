@@ -1,1 +1,0 @@
-allow vndservicemanager system_prop:file r_file_perms;

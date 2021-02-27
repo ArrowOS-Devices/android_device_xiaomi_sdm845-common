@@ -1,3 +1,0 @@
-allow vendor_vppservice hal_capabilityconfigstore_qti_hwservice:hwservice_manager { add find };
-
-binder_call(vendor_vppservice, hal_capabilityconfigstore_qti_default)
