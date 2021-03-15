@@ -1,9 +1,6 @@
 # Charger
 ro.charger.enable_suspend=true
 
-# Incremental FS
-ro.incremental.enable=1
-
 # LMKD
 ro.config.low_ram=false
 ro.lmk.log_stats=true
